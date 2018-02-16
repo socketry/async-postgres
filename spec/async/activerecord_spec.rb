@@ -4,6 +4,9 @@ require 'active_record'
 class Book < ActiveRecord::Base
 end
 
+# Good ol' ActiveRecord and it's global state
+# https://tenderlovemaking.com/2011/10/20/connection-management-in-activerecord.html
+
 RSpec.describe ActiveRecord do
 	include_context Async::RSpec::Reactor
 	
