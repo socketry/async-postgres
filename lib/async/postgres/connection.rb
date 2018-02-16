@@ -56,8 +56,10 @@ module Async
 					@connection.consume_input
 					
 					while @connection.is_busy == false
-						if last_result = @connection.get_result
-							yield last_result if block_given?
+						if result = @connection.get_result
+							last_result = result
+							
+							yield result if block_given?
 						else
 							return last_result
 						end

@@ -11,7 +11,9 @@ RSpec.describe Async::Postgres::Connection do
 		reactor.async do
 			results = connection.async_exec("SELECT 42 AS LIFE")
 		
-			expect(results.each.to_a).to be == [["42"]]
+			expect(results.each.to_a).to be == [{"life" => "42"}]
+			
+			connection.close
 		end
 	end
 end
