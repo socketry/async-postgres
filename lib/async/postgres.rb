@@ -20,11 +20,12 @@
 
 require_relative "postgres/version"
 require_relative "postgres/connection"
+require_relative "postgres/pool"
 
 require 'pg'
 
 module PG
 	def self.connect(connection_string)
-		Async::Postgres::Connection.new(connection_string)
+		Async::Postgres::Proxy.new(connection_string)
 	end
 end

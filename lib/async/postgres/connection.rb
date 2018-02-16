@@ -49,6 +49,7 @@ module Async
 			
 			def async_exec(*args)
 				@connection.send_query(*args)
+				last_result = result = true
 				
 				while true
 					wait_readable
@@ -65,6 +66,8 @@ module Async
 						end
 					end
 				end
+			ensure
+				@connection.get_result until result.nil?
 			end
 			
 			alias exec async_exec
