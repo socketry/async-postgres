@@ -27,13 +27,12 @@ module Async
 	
 	module Postgres
 		class Proxy
-			# Total concurrency = size * containers
-			def initialize(connection_string, size = 12, task: Task.current)
+			def initialize(connection_string, task: Task.current)
 				@connection_string = connection_string
 				
 				pools = task.reactor.postgres_pools ||= {}
 				
-				@pool = pools[@connection_string] ||= Pool.new(size) do
+				@pool = pools[@connection_string] ||= Pool.new do
 					Connection.new(@connection_string)
 				end
 			end
@@ -61,13 +60,10 @@ module Async
 			end
 		end
 		
+		# This pool doesn't impose a maximum number of open resources, but it WILL block if there are no available resources and trying to allocate another one fails.
 		class Pool
-			def initialize(limit, &block)
+			def initialize(&block)
 				@available = []
-				
-				@total = 0
-				@limit = limit
-				
 				@waiting = []
 				
 				@constructor = block
@@ -92,12 +88,8 @@ module Async
 				@available.clear
 			end
 			
-			def available?
-				@available.any? or @total < @limit
-			end
-			
 			def wait_for_next_available
-				until available? and resource = next_available
+				until resource = next_available
 					@waiting << Fiber.current
 					Task.yield
 				end
@@ -107,10 +99,9 @@ module Async
 			
 			def next_available
 				if @available.empty?
-					@total += 1
-					@constructor.call # This might fail
+					return @constructor.call # This might fail, which is okay :)
 				else
-					@available.pop
+					return @available.pop
 				end
 			rescue StandardError
 				$stderr.puts $!.inspect

@@ -8,5 +8,5 @@ end
 
 require 'active_record'
 
-ActiveRecord::Base.establish_connection(adapter: "postgresql", database: "test", pool: 128)
-ActiveRecord::Base.logger = Logger.new(STDOUT)
+ActiveRecord::Base.establish_connection(adapter: "postgresql", database: "test", pool: 1024)
+# ActiveRecord::Base.logger = Logger.new(STDOUT)
