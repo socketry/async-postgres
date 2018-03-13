@@ -138,6 +138,7 @@ We get close to the theoretical 5120 requests/second limit, but at this point th
 
 In theory, this is a drop-in replacement for ActiveRecord. But, it must be used with an [async] capable server like [falcon].
 
+[async]: https://github.com/socketry/async
 [falcon]: https://github.com/socketry/falcon
 [puma]: https://github.com/puma/puma
 
