@@ -1,8 +1,21 @@
 language: ruby
 sudo: false
+dist: trusty
+cache: bundler
 services:
   - postgresql
 before_script:
   - psql -c 'create database test;' -U postgres
-script:
-  - bundle exec rspec
+rvm:
+  - 2.2
+  - 2.3
+  - 2.4
+  - 2.5
+  - jruby-head
+  - ruby-head
+  - rbx-3
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: jruby-head
+    - rvm: rbx-3
