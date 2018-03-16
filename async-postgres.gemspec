@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
 	spec.require_paths = ["lib"]
 
 	spec.add_dependency "async", "~> 1.3"
-	spec.add_dependency "pg", "~> 0.18"
+	spec.add_dependency "pg"
 
 	spec.add_development_dependency "async-rspec"
 	spec.add_development_dependency "activerecord"
