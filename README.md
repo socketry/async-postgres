@@ -4,9 +4,7 @@ This is an experimental drop in wrapper to make Postgres work asynchronously.
 
 ## Motivation
 
-We have some IO bound web APIs generating statistics and we sometimes have issues when using [passenger] due to thread/process exhaustion.
-
-In addition, we make a lot of upstream HTTP RPCs and these are also IO bound.
+We have some IO bound web APIs generating statistics and we sometimes have issues when using [passenger] due to thread/process exhaustion. In addition, we make a lot of upstream HTTP RPCs and these are also IO bound.
 
 This library, in combination with [async-http], ensure that we don't become IO bound in many cases. In addition, we don't need to tune the intermediate server as it will simply scale according to backend resource availability and IO throughput.
 
