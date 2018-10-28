@@ -16,4 +16,12 @@ RSpec.describe Async::Postgres::Connection do
 			connection.close
 		end
 	end
+
+	it "should behave like real connection" do
+		reactor.async do
+			expect(connection.respond_to?(:conninfo)).to be true
+			
+			connection.close
+		end
+	end
 end

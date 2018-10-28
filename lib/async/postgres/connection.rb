@@ -74,7 +74,7 @@ module Async
 			alias exec_params exec
 			
 			def respond_to?(*args)
-				@connection.respond_to(*args)
+				@connection.respond_to?(*args)
 			end
 			
 			def method_missing(*args)
