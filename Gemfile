@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem "pg", "~> 0.18"
+gem "pg"
 
 group :development do
 	gem 'pry'

@@ -1,5 +1,4 @@
-
-gem 'pg', '~> 0.18'
+gem 'pg'
 
 if defined?(Falcon)
 	$stderr.puts "Loading async/postgres"
