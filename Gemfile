@@ -4,6 +4,10 @@ gemspec
 
 gem "pg"
 
+group :development, :test do
+	gem 'activerecord'
+end
+
 group :development do
 	gem 'pry'
 end

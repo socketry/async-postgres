@@ -21,6 +21,7 @@
 require_relative "postgres/version"
 require_relative "postgres/connection"
 require_relative "postgres/pool"
+require_relative "postgres/replace_connection_handler" if defined?(Rails)
 
 require 'pg'
 

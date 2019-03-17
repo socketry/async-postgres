@@ -18,50 +18,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require 'async/reactor'
-
 module Async
-	class Reactor < Node
-		attr_accessor :postgres_pools
-	end
-	
 	module Postgres
-		class Proxy
-			def initialize(connection_string, task: Task.current)
-				@connection_string = connection_string
-				
-				pools = task.reactor.postgres_pools ||= {}
-				
-				@pool = pools[@connection_string] ||= Pool.new do
-					Connection.new(@connection_string)
-				end
-			end
-			
-			def close
-				@pool.close
-			end
-			
-			def async_exec(*args)
-				@pool.acquire do |connection|
-					connection.async_exec(*args)
-				end
-			end
-			
-			def respond_to?(*args)
-				@pool.acquire do |connection|
-					connection.respond_to?(*args)
-				end
-			end
-			
-			def method_missing(*args, &block)
-				@pool.acquire do |connection|
-					connection.send(*args, &block)
-				end
-			end
-		end
-		
-		# This pool doesn't impose a maximum number of open resources, but it WILL block if there are no available resources and trying to allocate another one fails.
 		class Pool
+			# This pool doesn't impose a maximum number of open resources, but it WILL block
+			# if there are no available resources and trying to allocate another one fails.
+
 			def initialize(&block)
 				@available = []
 				@waiting = []
