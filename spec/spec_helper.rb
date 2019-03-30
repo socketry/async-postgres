@@ -1,23 +1,5 @@
 
-if ENV['COVERAGE']
-	begin
-		require 'simplecov'
-		
-		SimpleCov.start do
-			add_filter "/spec/"
-		end
-		
-		if ENV['TRAVIS']
-			require 'coveralls'
-			Coveralls.wear!
-		end
-	rescue LoadError
-		warn "Could not load simplecov: #{$!}"
-	end
-end
-
-require "bundler/setup"
-require "async/postgres"
+require 'covered/rspec'
 require 'async/rspec'
 
 begin

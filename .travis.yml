@@ -1,21 +1,25 @@
 language: ruby
-sudo: false
-dist: trusty
+dist: xenial
 cache: bundler
+
 services:
   - postgresql
 before_script:
   - psql -c 'create database test;' -U postgres
-rvm:
-  - 2.2
-  - 2.3
-  - 2.4
-  - 2.5
-  - jruby-head
-  - ruby-head
-  - rbx-3
+
 matrix:
+  include:
+    - rvm: 2.3
+    - rvm: 2.4
+    - rvm: 2.5
+    - rvm: 2.6
+    - rvm: 2.6
+      env: COVERAGE=BriefSummary,Coveralls
+    - rvm: ruby-head
+    - rvm: truffleruby
+    - rvm: jruby-head
+      env: JRUBY_OPTS="--debug -X+O"
   allow_failures:
     - rvm: ruby-head
+    - rvm: truffleruby
     - rvm: jruby-head
-    - rvm: rbx-3
