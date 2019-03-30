@@ -2,11 +2,15 @@
 require_relative 'schema'
 
 run lambda {|env|
+	connection_pool = ActiveRecord::Base.connection_pool
+	connection = connection_pool.checkout(10)
+	
 	10.times do
-		ActiveRecord::Base.connection.execute("SELECT pg_sleep(0.01)")
+		connection.execute("SELECT pg_sleep(1)")
 	end
 	
-	ActiveRecord::Base.clear_active_connections!
+	connection_pool.checkin(connection)
+	# ActiveRecord::Base.clear_active_connections!
 	
-	[200, {}, []]
+	[200, {}, ["Asynchronous Postgres\n"]]
 }
