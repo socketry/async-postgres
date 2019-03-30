@@ -99,13 +99,10 @@ module Async
 			
 			def next_available
 				if @available.empty?
-					return @constructor.call # This might fail, which is okay :)
+					return @constructor.call
 				else
 					return @available.pop
 				end
-			rescue StandardError
-				$stderr.puts $!.inspect
-				return nil
 			end
 		end
 	end
