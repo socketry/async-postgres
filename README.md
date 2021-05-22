@@ -1,6 +1,6 @@
 # Async::Postgres
 
-This is an experimental drop in wrapper to make Postgres work asynchronously.
+**This gem is experimental and unmaintained. Please see https://github.com/socketry/db-postgres for an event driven driver for Postgres.**
 
 ## Motivation
 
